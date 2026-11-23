@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CALCULADORA BRASIL PISCIS - PAINÉIS E TANQUE TITAN</title>
+<style>
+    body {
+        font-family: "Source Sans Pro", Arial, sans-serif;
+        background-color: #0e1117;
+        color: #fafafa;
+        margin: 0;
+        padding: 30px 20px;
+    }
+    h1 {
+        text-align: center;
+    }
+    .subtitle {
+        text-align: center;
+        color: #bbb;
+        margin-top: -10px;
+    }
+
+    /* Abas */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        max-width: 900px;
+        margin: 30px auto 0 auto;
+        border-bottom: 1px solid #444;
+    }
+    .tab-btn {
+        background: none;
+        border: none;
+        color: #bbb;
+        padding: 10px 20px;
+        font-size: 15px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+    }
+    .tab-btn.active {
+        color: #fafafa;
+        border-bottom: 3px solid #FF4B4B;
+        font-weight: bold;
+    }
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+
+    .inputs {
+        display: flex;
+        gap: 20px;
+        max-width: 900px;
+        margin: 30px auto 0 auto;
+        flex-wrap: wrap;
+    }
+    .input-group {
+        flex: 1;
+        min-width: 200px;
+    }
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        color: #ddd;
+    }
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #555;
+        background-color: #1c1f26;
+        color: #fafafa;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+    hr {
+        border: none;
+        border-top: 1px solid #444;
+        margin: 25px auto;
+        max-width: 900px;
+    }
+    .btn-wrap {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    button {
+        background-color: #FF4B4B;
+        color: white;
+        border: none;
+        padding: 10px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #e04343;
+    }
+    button.secundario {
+        background-color: #333a45;
+    }
+    button.secundario:hover {
+        background-color: #444c5a;
+    }
+    .error {
+        text-align: center;
+        color: #ff6b6b;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+    .resultados {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 25px auto 0 auto;
+        justify-content: center;
+    }
+    .card {
+        border: 2px solid #1E90FF;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        flex: 1 1 300px;
+        max-width: 350px;
+        box-sizing: border-box;
+    }
+    .card h3 {
+        color: #00BFFF;
+        margin-top: 0;
+    }
+    .card p {
+        margin: 6px 0;
+    }
+    .btn-whatsapp {
+        background-color: #25D366;
+        color: #062f1a;
+        width: 100%;
+        margin-top: 10px;
+        padding: 8px 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .btn-whatsapp:hover {
+        background-color: #1ebc59;
+    }
+    .whatsapp-panel {
+        display: none;
+        margin-top: 12px;
+        border-top: 1px solid #333;
+        padding-top: 12px;
+    }
+    .whatsapp-panel label {
+        font-size: 13px;
+        color: #ddd;
+        margin-bottom: 4px;
+    }
+    .whatsapp-panel input[type="text"] {
+        margin-bottom: 10px;
+    }
+    .whatsapp-panel textarea {
+        width: 100%;
+        min-height: 160px;
+        background-color: #1c1f26;
+        color: #fafafa;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 8px;
+        font-size: 13px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+    .btn-enviar-final {
+        background-color: #25D366;
+        color: #062f1a;
+        width: 100%;
+        padding: 8px 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .btn-enviar-final:hover {
+        background-color: #1ebc59;
+    }
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #aaa;
+    }
+
+    /* Cadastro */
+    .cadastro-wrap {
+        max-width: 900px;
+        margin: 30px auto 0 auto;
+    }
+    .form-cadastro {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        margin-bottom: 25px;
+    }
+    .form-cadastro .input-group {
+        flex: 1;
+        min-width: 180px;
+    }
+    .form-cadastro .acoes {
+        display: flex;
+        gap: 10px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    th, td {
+        border-bottom: 1px solid #333;
+        padding: 10px 8px;
+        text-align: left;
+        font-size: 14px;
+    }
+    th {
+        color: #bbb;
+        font-weight: normal;
+        border-bottom: 1px solid #555;
+    }
+    td.acoes-tabela {
+        display: flex;
+        gap: 8px;
+    }
+    .btn-tabela {
+        padding: 5px 12px;
+        font-size: 13px;
+        border-radius: 6px;
+    }
+    .btn-editar {
+        background-color: #1E90FF;
+    }
+    .btn-editar:hover {
+        background-color: #187bdb;
+    }
+    .btn-excluir {
+        background-color: #555;
+    }
+    .btn-excluir:hover {
+        background-color: #6b6b6b;
+    }
+    .info-largura-util {
+        color: #999;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+    .export-import {
+        margin-top: 30px;
+    }
+    .export-import textarea {
+        width: 100%;
+        min-height: 100px;
+        background-color: #1c1f26;
+        color: #fafafa;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 8px;
+        font-family: monospace;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+    .export-import .acoes {
+        display: flex;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    /* Tanque Redondo */
+    .tanque-wrap {
+        max-width: 1000px;
+        margin: 30px auto 0 auto;
+    }
+    .card-titan {
+        border: 2px solid #FF8C00;
+        border-radius: 10px;
+        padding: 15px 18px;
+        margin-bottom: 20px;
+    }
+    .card-titan h3 {
+        color: #FFA500;
+        margin-top: 0;
+    }
+    .grid-resultado {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 8px 20px;
+    }
+    .grid-resultado p {
+        margin: 4px 0;
+        font-size: 14px;
+    }
+    .grid-resultado b {
+        color: #ddd;
+    }
+    .destaque {
+        font-size: 17px;
+        color: #FFD27A;
+        font-weight: bold;
+    }
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #555;
+        background-color: #1c1f26;
+        color: #fafafa;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+    details.tabela-referencia {
+        max-width: 1000px;
+        margin: 25px auto 0 auto;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 10px 15px;
+    }
+    details.tabela-referencia summary {
+        cursor: pointer;
+        color: #bbb;
+        font-weight: bold;
+        padding: 6px 0;
+    }
+    .duas-tabelas {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+    .duas-tabelas > div {
+        flex: 1;
+        min-width: 280px;
+    }
+    .sub-bloco {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px dashed #444;
+    }
+</style>
+</head>
+<body>
+
+<h1>CALCULADORA BRASIL PISCIS</h1>
+<p class="subtitle">Painéis de Geomembrana e Tanque Titan Padrão</p>
+
+<div class="tabs">
+    <button class="tab-btn active" id="tab-btn-calculadora" onclick="mostrarAba('calculadora')">Calculadora de Painéis</button>
+    <button class="tab-btn" id="tab-btn-tanque" onclick="mostrarAba('tanque')">Tanque Titan (Redondo)</button>
+    <button class="tab-btn" id="tab-btn-cadastro" onclick="mostrarAba('cadastro')">Cadastro de Materiais</button>
+</div>
+
+<!-- ABA CALCULADORA -->
+<div id="tab-calculadora" class="tab-content active">
+
+    <div class="inputs">
+        <div class="input-group">
+            <label for="largura">Largura (m)</label>
+            <input type="text" id="largura">
+        </div>
+        <div class="input-group">
+            <label for="comprimento">Comprimento (m)</label>
+            <input type="text" id="comprimento">
+        </div>
+        <div class="input-group">
+            <label for="profundidade">Profundidade (m)</label>
+            <input type="text" id="profundidade">
+        </div>
+        <div class="input-group">
+            <label for="ancoragem">Ancoragem (m)</label>
+            <input type="text" id="ancoragem">
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="btn-wrap">
+        <button onclick="calcular()">Calcular</button>
+    </div>
+
+    <div id="erro" class="error" style="display:none;"></div>
+
+    <div id="resultados" class="resultados"></div>
+</div>
+
+<!-- ABA TANQUE REDONDO (TITAN) -->
+<div id="tab-tanque" class="tab-content">
+    <div class="tanque-wrap">
+
+        <div class="card-titan">
+            <h3>Dados do tanque</h3>
+            <div class="inputs" style="margin-top:0;max-width:100%;">
+                <div class="input-group">
+                    <label for="t-material">Material (opcional - preenche peso e bobina)</label>
+                    <select id="t-material" onchange="preencherMaterialTanque()">
+                        <option value="">-- selecionar material --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inputs" style="max-width:100%;">
+                <div class="input-group">
+                    <label for="t-diametro">Diâmetro do tanque (m)</label>
+                    <input type="text" id="t-diametro" placeholder="Ex: 8.55">
+                </div>
+                <div class="input-group">
+                    <label for="t-altura">Altura da parede (m)</label>
+                    <input type="text" id="t-altura" placeholder="Ex: 1.2">
+                </div>
+                <div class="input-group">
+                    <label for="t-peso">Peso do material (kg/m²)</label>
+                    <input type="text" id="t-peso" placeholder="Ex: 1.3">
+                </div>
+                <div class="input-group">
+                    <label for="t-bobina">Largura real da bobina (m)</label>
+                    <input type="text" id="t-bobina" placeholder="Ex: 3">
+                </div>
+            </div>
+
+            <div class="btn-wrap" style="margin-top:15px;">
+                <button onclick="calcularTanque()">Calcular Tanque</button>
+            </div>
+            <div id="erro-tanque" class="error" style="display:none;"></div>
+        </div>
+
+        <div id="resultado-tanque"></div>
+
+        <!-- Descobrir diâmetro exato -->
+        <div class="card-titan sub-bloco">
+            <h3>Descobrir o diâmetro exato a partir do volume desejado</h3>
+            <div class="inputs" style="max-width:100%;">
+                <div class="input-group">
+                    <label for="t-altura-real">Altura real do tanque (m)</label>
+                    <input type="text" id="t-altura-real" placeholder="Ex: 1.2">
+                </div>
+                <div class="input-group">
+                    <label for="t-volume-desejado">Volume desejado (m³ / mil litros)</label>
+                    <input type="text" id="t-volume-desejado" placeholder="Ex: 500">
+                </div>
+            </div>
+            <div class="btn-wrap" style="margin-top:10px;">
+                <button onclick="calcularDiametroExato()">Calcular Diâmetro Exato</button>
+            </div>
+            <div id="erro-diametro" class="error" style="display:none;"></div>
+            <div id="resultado-diametro" class="grid-resultado" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- Tabelas de referência -->
+        <details class="tabela-referencia">
+            <summary>Tabelas de referência (materiais e peso das peças)</summary>
+            <div class="duas-tabelas" style="margin-top:15px;">
+                <div>
+                    <h4>Materiais para tanque redondo</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Bobina (m)</th>
+                                <th>Peso (kg/m²)</th>
+                                <th>Temp. solda (ºC)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-materiais-tanque"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>Peso de peças (Tabela Padrão)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Peso (kg)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-pecas-padrao"></tbody>
+                    </table>
+                    <h4 style="margin-top:20px;">Volume × Diâmetro (referência)</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Volume (m³)</th>
+                                <th>Ø (m)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-volume-diametro"></tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+    </div>
+</div>
+
+<!-- ABA CADASTRO -->
+<div id="tab-cadastro" class="tab-content">
+    <div class="cadastro-wrap">
+
+        <div id="erro-cadastro" class="error" style="display:none;"></div>
+
+        <div class="form-cadastro">
+            <div class="input-group">
+                <label for="cad-nome">Nome do material</label>
+                <input type="text" id="cad-nome" placeholder="Ex: PVC TRANÇADO CINZA 0,8MM">
+            </div>
+            <div class="input-group">
+                <label for="cad-peso">Peso (kg/m²)</label>
+                <input type="text" id="cad-peso" placeholder="Ex: 0.6">
+            </div>
+            <div class="input-group">
+                <label for="cad-bobina">Largura da bobina padrão (m)</label>
+                <input type="text" id="cad-bobina" placeholder="Ex: 3.0" oninput="atualizarLarguraUtil()">
+            </div>
+            <div class="input-group">
+                <label for="cad-preco">Preço (R$/m²)</label>
+                <input type="text" id="cad-preco" placeholder="Ex: 42">
+            </div>
+            <div class="acoes">
+                <button onclick="salvarMaterial()" id="btn-salvar-material">Adicionar</button>
+                <button class="secundario" onclick="cancelarEdicao()" id="btn-cancelar-edicao" style="display:none;">Cancelar</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Peso (kg/m²)</th>
+                    <th>Bobina (m)</th>
+                    <th>Largura útil (m)</th>
+                    <th>Preço (R$/m²)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-materiais"></tbody>
+        </table>
+
+        <div class="export-import">
+            <label>Exportar / Importar cadastro (use para não perder os dados ao fechar a página)</label>
+            <textarea id="export-import-texto" placeholder="Clique em Exportar para gerar o texto, ou cole aqui um texto exportado antes e clique em Importar."></textarea>
+            <div class="acoes">
+                <button class="secundario" onclick="exportarMateriais()">Exportar</button>
+                <button class="secundario" onclick="importarMateriais()">Importar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<hr>
+<footer>© 2026 Brasil Piscis - Calculadora de Painéis e Tanques Titan - Developed by Matheus Tartaglia</footer>
+
+<script>
+// coloquei esse comentario
+
+// ---------- Números no formato brasileiro (1.243,44) ----------
+// Lê um número digitado no formato brasileiro (1.243,44) ou com ponto decimal (8.55).
+function lerNumero(valor) {
+    let s = String(valor).trim().replace(/\s/g, "");
+    if (s === "") return NaN;
+    if (s.indexOf(",") !== -1) {
+        // Tem vírgula: pontos são milhar, vírgula é decimal
+        s = s.replace(/\./g, "").replace(",", ".");
+    } else if (/^-?[1-9]\d{0,2}(\.\d{3})+$/.test(s)) {
+        // Só pontos de milhar (ex: 1.243 ou 12.345.678)
+        s = s.replace(/\./g, "");
+    }
+    // Caso contrário, ponto único é decimal (ex: 8.55)
+    return parseFloat(s);
+}
+
+// Número -> texto no formato brasileiro (ex: 1243.44 -> "1.243,44")
+function formatarBR(numero) {
+    return Number(numero).toLocaleString("pt-BR", { maximumFractionDigits: 6 });
+}
+
+const CAMPOS_NUMERICOS = [
+    "largura", "comprimento", "profundidade", "ancoragem",
+    "t-diametro", "t-altura", "t-peso", "t-bobina",
+    "t-altura-real", "t-volume-desejado",
+    "cad-peso", "cad-bobina", "cad-preco",
+];
+
+// Formata o campo enquanto a pessoa digita: agrupa milhar com ponto e usa vírgula decimal.
+// Um ponto digitado vira vírgula decimal (quem tem o costume de digitar 8.55 recebe 8,55).
+function formatarCampoDigitando(campo, evento) {
+    const valor = campo.value;
+
+    // Texto colado: interpreta e reformata tudo de uma vez
+    if (evento.inputType === "insertFromPaste") {
+        const n = lerNumero(valor);
+        if (!isNaN(n)) campo.value = formatarBR(n);
+        return;
+    }
+
+    const pos = campo.selectionStart;
+    let antes = valor.slice(0, pos);
+    let depois = valor.slice(pos);
+    const MARCA = "\u0000";
+
+    if (evento.data === "." || evento.data === ",") {
+        // O separador recém-digitado vira a vírgula decimal;
+        // uma vírgula que já existia passa a ser tratada como milhar (descartada).
+        antes = antes.slice(0, -1).replace(/,/g, "") + MARCA;
+        depois = depois.replace(/,/g, "");
+    }
+
+    // Mantém só dígitos e vírgula (os pontos de milhar são refeitos abaixo)
+    antes = antes.replace(/[^\d,\u0000]/g, "").replace(MARCA, ",");
+    depois = depois.replace(/[^\d,]/g, "");
+
+    const caracteresAntes = antes.length; // dígitos + vírgula antes do cursor
+    let texto = antes + depois;
+
+    // Só uma vírgula
+    const iVirgula = texto.indexOf(",");
+    let parteInteira = iVirgula === -1 ? texto : texto.slice(0, iVirgula);
+    const parteDecimal = iVirgula === -1 ? null : texto.slice(iVirgula + 1).replace(/,/g, "");
+
+    parteInteira = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const novo = parteInteira + (parteDecimal !== null ? "," + parteDecimal : "");
+
+    if (novo === valor) return;
+    campo.value = novo;
+
+    // Recoloca o cursor no mesmo ponto (ignorando os pontos de milhar)
+    let contados = 0, novaPos = 0;
+    while (novaPos < novo.length && contados < caracteresAntes) {
+        if (novo[novaPos] !== ".") contados++;
+        novaPos++;
+    }
+    try { campo.setSelectionRange(novaPos, novaPos); } catch (e) {}
+}
+
+// Ao sair do campo: arruma sobras como "12," ou ",5"
+function finalizarCampo(campo) {
+    let v = campo.value.trim();
+    if (v === "") return;
+    if (v.endsWith(",")) v = v.slice(0, -1);
+    if (v.startsWith(",")) v = "0" + v;
+    campo.value = v;
+}
+
+function ativarFormatoBrasileiro() {
+    CAMPOS_NUMERICOS.forEach(function (id) {
+        const campo = document.getElementById(id);
+        if (!campo) return;
+        campo.setAttribute("inputmode", "decimal");
+        campo.addEventListener("input", function (e) { formatarCampoDigitando(campo, e); });
+        campo.addEventListener("blur", function () { finalizarCampo(campo); });
+    });
+}
+
+const PERDA_SOLDA = 0.10; // 10cm descontados automaticamente da largura da bobina
+
+let materiaisList = [
+    { nome: "PVC TRANÇADO BRANCO/CINZA 0,4MM", peso: 0.6, bobina: 3.0, preco: 25 },
+    { nome: "PVC PURO PRETO/PRETO 1MM", peso: 1.1, bobina: 2.3, preco: 67.65 },
+    { nome: "PVC TRANÇADO AZUL/AZUL 0,9MM", peso: 1.3, bobina: 3.0, preco: 81.60 },
+    { nome: "PVC TRANÇADO CINZA/CINZA 0.8MM", peso: 0.6, bobina: 2.0, preco: 60.00 },
+    { nome: "PEAD TRANÇADO VERDE/PRETO 0,75MM", peso: 0.45, bobina: 4.2, preco: 38.40 },
+    { nome: "PEAD TRANÇADO PRETO/PRETO 1MM", peso: 0.6, bobina: 4.0, preco: 50.15 },
+    { nome: "PVC TRANÇADO PRETO/BRANCO 0,7MM", peso: 0.85, bobina: 3.0, preco: 42 },
+];
+
+let indiceEmEdicao = null; // null = modo "adicionar"; número = modo "editando esse índice"
+
+// ---------- Abas ----------
+function mostrarAba(aba) {
+    document.getElementById("tab-calculadora").classList.toggle("active", aba === "calculadora");
+    document.getElementById("tab-tanque").classList.toggle("active", aba === "tanque");
+    document.getElementById("tab-cadastro").classList.toggle("active", aba === "cadastro");
+    document.getElementById("tab-btn-calculadora").classList.toggle("active", aba === "calculadora");
+    document.getElementById("tab-btn-tanque").classList.toggle("active", aba === "tanque");
+    document.getElementById("tab-btn-cadastro").classList.toggle("active", aba === "cadastro");
+}
+
+// ---------- Calculadora ----------
+function calcular() {
+    const erroDiv = document.getElementById("erro");
+    const resultadosDiv = document.getElementById("resultados");
+    erroDiv.style.display = "none";
+    erroDiv.textContent = "";
+    resultadosDiv.innerHTML = "";
+
+    const larguraStr = document.getElementById("largura").value;
+    const comprimentoStr = document.getElementById("comprimento").value;
+    const profundidadeStr = document.getElementById("profundidade").value;
+    const ancoragemStr = document.getElementById("ancoragem").value;
+
+    const valor1 = lerNumero(larguraStr);
+    const valor2 = lerNumero(comprimentoStr);
+    const valor3 = lerNumero(profundidadeStr);
+    const valorAncoragem = lerNumero(ancoragemStr);
+
+    if (
+        larguraStr.trim() === "" || comprimentoStr.trim() === "" || profundidadeStr.trim() === "" || ancoragemStr.trim() === "" ||
+        isNaN(valor1) || isNaN(valor2) || isNaN(valor3) || isNaN(valorAncoragem)
+    ) {
+        erroDiv.textContent = "Por favor, digite números válidos.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    if (materiaisList.length === 0) {
+        erroDiv.textContent = "Nenhum material cadastrado. Adicione materiais na aba Cadastro de Materiais.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    const valor_largura = (valor1 + (valorAncoragem * 2)) + (valor3 * 2);
+    const valor_comprimento = (valor2 + (valorAncoragem * 2)) + (valor3 * 2);
+
+    materiaisList.forEach(function (dados, i) {
+        const nome = dados.nome;
+        const peso_especifico = dados.peso;
+        const L_bobina = dados.bobina;
+        const preco = dados.preco;
+
+        const faixas = Math.ceil(valor_largura / (L_bobina - PERDA_SOLDA));
+        const largura_real = (faixas * L_bobina) - (PERDA_SOLDA * (faixas - 1));
+        const comprimento_real = valor_comprimento;
+        const valor_total_real = largura_real * comprimento_real;
+
+        const peso_painel = peso_especifico * valor_total_real;
+        const valor_total = preco * valor_total_real;
+
+        const mensagemPadrao = montarMensagemOrcamento({
+            nome, largura_real, comprimento_real, valor_total_real, peso_painel, valor_total
+        });
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <h3>${nome}</h3>
+            <p><b>LARGURA:</b> ${largura_real.toFixed(2)} m</p>
+            <p><b>COMPRIMENTO:</b> ${comprimento_real.toFixed(2)} m</p>
+            <p><b>METRAGEM QUADRADA:</b> ${valor_total_real.toFixed(2)} m²</p>
+            <p><b>PESO DO PAINEL:</b> ${peso_painel.toFixed(2)} kg</p>
+            <p><b>VALOR ESTIMADO:</b> R$ ${valor_total.toFixed(2)}</p>
+
+            <button class="btn-whatsapp" onclick="togglePainelWhatsapp(${i})">Enviar orçamento deste produto</button>
+
+            <div class="whatsapp-panel" id="whatsapp-panel-${i}">
+                <label for="telefone-${i}">Telefone do cliente (DDD + número)</label>
+                <input type="text" id="telefone-${i}" placeholder="Ex: 11999999999">
+
+                <label for="mensagem-${i}">Mensagem (edite se quiser antes de enviar)</label>
+                <textarea id="mensagem-${i}">${mensagemPadrao}</textarea>
+
+                <button class="btn-enviar-final" onclick="enviarWhatsapp(${i})">Enviar pelo WhatsApp Web</button>
+            </div>
+        `;
+        resultadosDiv.appendChild(card);
+    });
+}
+
+function montarMensagemOrcamento(dados) {
+    return `Olá! 😊
+Segue o orçamento do seu tanque, feito pela *BRASIL PISCIS*:
+
+🧵 Material: ${dados.nome}
+📐 Largura: ${dados.largura_real.toFixed(2)} m
+📏 Comprimento: ${dados.comprimento_real.toFixed(2)} m
+📦 Metragem total: ${dados.valor_total_real.toFixed(2)} m²
+⚖️ Peso do painel: ${dados.peso_painel.toFixed(2)} kg
+💰 Valor estimado: R$ ${dados.valor_total.toFixed(2)}
+
+Qualquer dúvida, estamos à disposição!`;
+}
+
+function togglePainelWhatsapp(indice) {
+    const painel = document.getElementById(`whatsapp-panel-${indice}`);
+    painel.style.display = (painel.style.display === "block") ? "none" : "block";
+}
+
+function enviarWhatsapp(indice) {
+    const telefoneInput = document.getElementById(`telefone-${indice}`);
+    const mensagem = document.getElementById(`mensagem-${indice}`).value;
+
+    let digitos = telefoneInput.value.replace(/\D/g, "");
+
+    if (digitos.length === 10 || digitos.length === 11) {
+        digitos = "55" + digitos;
+    }
+
+    if (digitos.length !== 12 && digitos.length !== 13) {
+        alert("Digite um telefone válido, com DDD (Ex: 11999999999).");
+        return;
+    }
+
+    const url = `https://web.whatsapp.com/send?phone=${digitos}&text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
+}
+
+// ---------- Cadastro de materiais ----------
+function larguraUtil(bobina) {
+    return bobina - PERDA_SOLDA;
+}
+
+function atualizarLarguraUtil() {
+    const infoDiv = document.getElementById("info-largura-util");
+    if (!infoDiv) return;
+    const bobina = lerNumero(document.getElementById("cad-bobina").value);
+    if (isNaN(bobina)) {
+        infoDiv.textContent = "Largura útil (com desconto de 10cm de solda): —";
+    } else {
+        infoDiv.textContent = `Largura útil (com desconto de 10cm de solda): ${larguraUtil(bobina).toFixed(2)} m`;
+    }
+}
+
+function renderizarTabela() {
+    const tbody = document.getElementById("tabela-materiais");
+    tbody.innerHTML = "";
+
+    materiaisList.forEach(function (m, i) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${m.nome}</td>
+            <td>${m.peso.toFixed(2)}</td>
+            <td>${m.bobina.toFixed(2)}</td>
+            <td>${larguraUtil(m.bobina).toFixed(2)}</td>
+            <td>R$ ${m.preco.toFixed(2)}</td>
+            <td class="acoes-tabela">
+                <button class="btn-tabela btn-editar" onclick="editarMaterial(${i})">Editar</button>
+                <button class="btn-tabela btn-excluir" onclick="excluirMaterial(${i})">Excluir</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function limparFormularioCadastro() {
+    document.getElementById("cad-nome").value = "";
+    document.getElementById("cad-peso").value = "";
+    document.getElementById("cad-bobina").value = "";
+    document.getElementById("cad-preco").value = "";
+    atualizarLarguraUtil();
+}
+
+function salvarMaterial() {
+    const erroDiv = document.getElementById("erro-cadastro");
+    erroDiv.style.display = "none";
+    erroDiv.textContent = "";
+
+    const nome = document.getElementById("cad-nome").value.trim();
+    const peso = lerNumero(document.getElementById("cad-peso").value);
+    const bobina = lerNumero(document.getElementById("cad-bobina").value);
+    const preco = lerNumero(document.getElementById("cad-preco").value);
+
+    if (nome === "" || isNaN(peso) || isNaN(bobina) || isNaN(preco)) {
+        erroDiv.textContent = "Preencha todos os campos com valores válidos.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    if (bobina <= PERDA_SOLDA) {
+        erroDiv.textContent = `A largura da bobina precisa ser maior que ${PERDA_SOLDA} m (desconto da solda).`;
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    const novoMaterial = { nome, peso, bobina, preco };
+
+    if (indiceEmEdicao === null) {
+        materiaisList.push(novoMaterial);
+    } else {
+        materiaisList[indiceEmEdicao] = novoMaterial;
+        cancelarEdicao();
+    }
+
+    limparFormularioCadastro();
+    renderizarTabela();
+}
+
+function editarMaterial(indice) {
+    const m = materiaisList[indice];
+    document.getElementById("cad-nome").value = m.nome;
+    document.getElementById("cad-peso").value = formatarBR(m.peso);
+    document.getElementById("cad-bobina").value = formatarBR(m.bobina);
+    document.getElementById("cad-preco").value = formatarBR(m.preco);
+    atualizarLarguraUtil();
+
+    indiceEmEdicao = indice;
+    document.getElementById("btn-salvar-material").textContent = "Salvar edição";
+    document.getElementById("btn-cancelar-edicao").style.display = "inline-block";
+}
+
+function cancelarEdicao() {
+    indiceEmEdicao = null;
+    document.getElementById("btn-salvar-material").textContent = "Adicionar";
+    document.getElementById("btn-cancelar-edicao").style.display = "none";
+    limparFormularioCadastro();
+}
+
+function excluirMaterial(indice) {
+    materiaisList.splice(indice, 1);
+    if (indiceEmEdicao === indice) {
+        cancelarEdicao();
+    }
+    renderizarTabela();
+}
+
+// ---------- Exportar / Importar ----------
+function exportarMateriais() {
+    document.getElementById("export-import-texto").value = JSON.stringify(materiaisList, null, 2);
+}
+
+function importarMateriais() {
+    const erroDiv = document.getElementById("erro-cadastro");
+    erroDiv.style.display = "none";
+    erroDiv.textContent = "";
+
+    const texto = document.getElementById("export-import-texto").value.trim();
+    if (texto === "") {
+        erroDiv.textContent = "Cole o texto exportado antes de importar.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    try {
+        const dados = JSON.parse(texto);
+        if (!Array.isArray(dados)) {
+            throw new Error("Formato inválido");
+        }
+        materiaisList = dados;
+        cancelarEdicao();
+        renderizarTabela();
+    } catch (e) {
+        erroDiv.textContent = "Não foi possível importar. Verifique se o texto colado é o mesmo gerado pelo Exportar.";
+        erroDiv.style.display = "block";
+    }
+}
+
+// ---------- Tanque Titan (Redondo) ----------
+// Dados extraídos da planilha "TABELA_AUTOMATIZADA" (aba Sheet3)
+const TANQUE_MATERIAIS = [
+    { nome: "PEAD TRANÇ VERDE E PRETO 0,75MM", bobina: 4.2, peso: 0.45, temp: 350 },
+    { nome: "PVC LISO PURO 1MM", bobina: 2.2, peso: 1.30, temp: 400 },
+    { nome: "PVC TRANÇ BRANCO E CINZA 0,4MM", bobina: 3.0, peso: 0.50, temp: 380 },
+    { nome: "PVC TRANÇ CINZA 0,8MM", bobina: 2.1, peso: 1.10, temp: 380 },
+    { nome: "PVC TRANÇ PRETO/BRANCO 0.4MM", bobina: 3.0, peso: 0.50, temp: 380 },
+    { nome: "PVC TRANÇ PRETO/BRANCO 0.7MM", bobina: 3.0, peso: 0.85, temp: 380 },
+    { nome: "PVC TRANÇ PRETO/BRANCO 0.9MM", bobina: 3.0, peso: 1.30, temp: 380 },
+    { nome: "PEAD PURO PRETO/PRETO 0.5MM", bobina: 3.0, peso: null, temp: 400 },
+    { nome: "PVC LISO PURO PRETO/BRANCO 1.2MM", bobina: 2.0, peso: 1.30, temp: 380 },
+    { nome: "PVC AZUL 0.9MM", bobina: 3.0, peso: 1.30, temp: 380 },
+];
+
+// Peso unitário das peças (aba "TABELA PADRÃO")
+const PESO_PECAS = {
+    poste: 2.35,
+    grampoGrande: 0.047,
+    grampoPequeno: 0.027,
+    caboAcoGrosso: 0.093,
+    caboAcoFino: 0.038,
+    cascoCobra: 0.09,
+    esticadorGrosso: 0.252,
+    esticadorFino: 0.148,
+    arameEspinar: 1.2,
+    tampaPoste: 0.005,
+    telaMorlan: 1.0,
+    superCola: 0.25,
+    flange: 0.25,
+};
+
+// Tabela de referência Volume x Diâmetro (aba "TABELA PADRÃO")
+const TABELA_VOLUME_DIAMETRO = [
+    [1.74, 1.6], [7.87, 7.23], [17.3, 15.92], [32.32, 29.77], [50.05, 46.15],
+    [74.62, 68.88], [136.06, 125.85], [217.9, 201.95], [321.41, 298.44],
+    [447.86, 416.6], [598.54, 557.71], [774.71, 723.04], [977.64, 913.85],
+    [1208.61, 1131.42], [1468.89, 1377.03], [1759.76, 1651.95],
+];
+
+function preencherSelectMateriaisTanque() {
+    const select = document.getElementById("t-material");
+    TANQUE_MATERIAIS.forEach(function (m, i) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = m.nome;
+        select.appendChild(opt);
+    });
+}
+
+function preencherMaterialTanque() {
+    const idx = document.getElementById("t-material").value;
+    if (idx === "") return;
+    const m = TANQUE_MATERIAIS[idx];
+    if (m.peso !== null) {
+        document.getElementById("t-peso").value = formatarBR(m.peso);
+    }
+    document.getElementById("t-bobina").value = formatarBR(m.bobina);
+}
+
+function renderizarTabelasReferenciaTanque() {
+    const tbodyMateriais = document.getElementById("tabela-materiais-tanque");
+    tbodyMateriais.innerHTML = "";
+    TANQUE_MATERIAIS.forEach(function (m) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${m.nome}</td>
+            <td>${m.bobina.toFixed(2)}</td>
+            <td>${m.peso !== null ? m.peso.toFixed(2) : "—"}</td>
+            <td>${m.temp}</td>
+        `;
+        tbodyMateriais.appendChild(tr);
+    });
+
+    const tbodyPecas = document.getElementById("tabela-pecas-padrao");
+    tbodyPecas.innerHTML = "";
+    const nomesPecas = {
+        poste: "POSTE", grampoGrande: "GRAMPO GRANDE", grampoPequeno: "GRAMPO PEQUENO",
+        caboAcoGrosso: "CABO DE AÇO (GROSSO) (M)", caboAcoFino: "CABO DE AÇO (FINO) (M)",
+        cascoCobra: "CASCO DE COBRA (M)", esticadorGrosso: "ESTICADOR (GROSSO)",
+        esticadorFino: "ESTICADOR (FINO)", arameEspinar: "ARAME ESPINAR (ROLO)",
+        tampaPoste: "TAMPA DE POSTE", telaMorlan: "TELA MORLAN",
+        superCola: "SUPER COLA", flange: "FLANGE",
+    };
+    Object.keys(PESO_PECAS).forEach(function (chave) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${nomesPecas[chave]}</td><td>${PESO_PECAS[chave].toFixed(3)}</td>`;
+        tbodyPecas.appendChild(tr);
+    });
+
+    const tbodyVD = document.getElementById("tabela-volume-diametro");
+    tbodyVD.innerHTML = "";
+    TABELA_VOLUME_DIAMETRO.forEach(function ([volume, diametro]) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${volume.toFixed(2)}</td><td>${diametro.toFixed(2)}</td>`;
+        tbodyVD.appendChild(tr);
+    });
+}
+
+function calcularTanque() {
+    const erroDiv = document.getElementById("erro-tanque");
+    const resultadoDiv = document.getElementById("resultado-tanque");
+    erroDiv.style.display = "none";
+    erroDiv.textContent = "";
+    resultadoDiv.innerHTML = "";
+
+    const diametro = lerNumero(document.getElementById("t-diametro").value);
+    const altura = lerNumero(document.getElementById("t-altura").value);
+    const pesoM2 = lerNumero(document.getElementById("t-peso").value);
+    const bobina = lerNumero(document.getElementById("t-bobina").value);
+
+    if (isNaN(diametro) || isNaN(altura) || isNaN(pesoM2) || isNaN(bobina)) {
+        erroDiv.textContent = "Por favor, preencha diâmetro, altura, peso do material e largura da bobina com números válidos.";
+        erroDiv.style.display = "block";
+        return;
+    }
+    if (bobina <= 0) {
+        erroDiv.textContent = "A largura da bobina precisa ser maior que zero.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    // ---- Réplica das fórmulas da planilha "AUTOMATIZAÇÃO" ----
+    const alturaMais30 = altura + 0.3;                 // D14
+    const circunferencia = (diametro + 0.3) * 3.1416;  // E14
+    const raio = diametro / 2;                         // F14
+
+    const lateralM2 = alturaMais30 * circunferencia;         // E8
+    const fundoM2 = Math.pow(raio, 2) * 3.1415;              // F8
+    const geomembranaTotal = lateralM2 + fundoM2;            // D8
+    const cortesFundo = Math.ceil(diametro / bobina);        // G8
+    const ilhois = Math.ceil(circunferencia / 1.2) - 1;      // H8
+
+    const volumeSemChapeu = 3.1416 * Math.pow(raio, 2) * altura;                          // E18
+    const volumeComChapeu = volumeSemChapeu + 0.333 * ((raio * 0.07) * 3.1416 * raio * raio); // D18
+
+    const pesoBolsao = geomembranaTotal * pesoM2;   // B21
+
+    const fiadas = diametro < 8 ? 5 : 7;                    // F22
+    const caboAcoMais5pct = circunferencia * fiadas * 1.05; // E22
+    const caboAcoFiada = caboAcoMais5pct / fiadas;          // D22
+    const telaMorlanQtd = circunferencia * 1.05;            // G22
+    const aramePretoEncapado = 1;                           // H22
+
+    const postes = Math.ceil(circunferencia / 1.2) + 1;  // D24
+    const travas = 25;                                    // E24 (6*4+1)
+    const esticadores = fiadas + 1;                       // F24
+    const babyPreto = telaMorlanQtd;                      // G24
+    const flange = 1;                                     // H24
+    const superCola = flange;                             // D28
+    const tampaPoste = postes;                            // E28
+
+    const pesoTotal = pesoBolsao
+        + (PESO_PECAS.poste * postes)
+        + (travas * PESO_PECAS.grampoGrande)
+        + (PESO_PECAS.caboAcoFino * caboAcoMais5pct)
+        + (PESO_PECAS.cascoCobra * babyPreto)
+        + (PESO_PECAS.esticadorGrosso * esticadores)
+        + (PESO_PECAS.arameEspinar * aramePretoEncapado)
+        + (PESO_PECAS.tampaPoste * tampaPoste)
+        + (PESO_PECAS.telaMorlan * telaMorlanQtd)
+        + (PESO_PECAS.superCola * superCola)
+        + (PESO_PECAS.flange * flange); // B24
+
+    const r = {
+        diametro, altura, pesoM2, bobina,
+        geomembranaTotal, lateralM2, fundoM2, cortesFundo, ilhois,
+        volumeComChapeu, volumeSemChapeu, pesoBolsao,
+        caboAcoFiada, caboAcoMais5pct, fiadas, telaMorlanQtd, aramePretoEncapado,
+        postes, travas, esticadores, babyPreto, flange, superCola, tampaPoste,
+        pesoTotal,
+    };
+
+    resultadoDiv.innerHTML = `
+        <div class="card-titan">
+            <h3>Geomembrana</h3>
+            <div class="grid-resultado">
+                <p><b>Geomembrana total:</b> ${r.geomembranaTotal.toFixed(2)} m²</p>
+                <p><b>M² da lateral:</b> ${r.lateralM2.toFixed(2)} m²</p>
+                <p><b>M² do fundo:</b> ${r.fundoM2.toFixed(2)} m²</p>
+                <p><b>Qtde cortes do fundo:</b> ${r.cortesFundo}</p>
+                <p><b>Ilhós:</b> ${r.ilhois}</p>
+            </div>
+        </div>
+
+        <div class="card-titan">
+            <h3>Volume</h3>
+            <div class="grid-resultado">
+                <p><b>Volume c/ chapéu:</b> ${r.volumeComChapeu.toFixed(2)} m³</p>
+                <p><b>Volume s/ chapéu:</b> ${r.volumeSemChapeu.toFixed(2)} m³</p>
+            </div>
+        </div>
+
+        <div class="card-titan">
+            <h3>Peso do Bolsão (Geomembrana)</h3>
+            <p class="destaque">${r.pesoBolsao.toFixed(2)} kg</p>
+        </div>
+
+        <div class="card-titan">
+            <h3>Estrutura</h3>
+            <div class="grid-resultado">
+                <p><b>Cabo de aço (fiada):</b> ${r.caboAcoFiada.toFixed(2)} m</p>
+                <p><b>Cabo de aço + 5%:</b> ${r.caboAcoMais5pct.toFixed(2)} m</p>
+                <p><b>Qtde de fiadas:</b> ${r.fiadas}</p>
+                <p><b>Tela soldada Morlan:</b> ${r.telaMorlanQtd.toFixed(2)} m</p>
+                <p><b>Arame preto encapado:</b> ${r.aramePretoEncapado}</p>
+                <p><b>Postes:</b> ${r.postes}</p>
+                <p><b>Travas:</b> ${r.travas}</p>
+                <p><b>Esticadores:</b> ${r.esticadores}</p>
+                <p><b>Baby preto:</b> ${r.babyPreto.toFixed(2)} m</p>
+                <p><b>Flange:</b> ${r.flange}</p>
+                <p><b>Super cola:</b> ${r.superCola}</p>
+                <p><b>Tampa de poste:</b> ${r.tampaPoste}</p>
+            </div>
+        </div>
+
+        <div class="card-titan">
+            <h3>Peso Total do Tanque</h3>
+            <p class="destaque">${r.pesoTotal.toFixed(2)} kg</p>
+
+            <button class="btn-whatsapp" onclick="togglePainelWhatsappTanque()">Enviar orçamento deste tanque</button>
+            <div class="whatsapp-panel" id="whatsapp-panel-tanque">
+                <label for="telefone-tanque">Telefone do cliente (DDD + número)</label>
+                <input type="text" id="telefone-tanque" placeholder="Ex: 11999999999">
+                <label for="mensagem-tanque">Mensagem (edite se quiser antes de enviar)</label>
+                <textarea id="mensagem-tanque">${montarMensagemTanque(r)}</textarea>
+                <button class="btn-enviar-final" onclick="enviarWhatsappTanque()">Enviar pelo WhatsApp Web</button>
+            </div>
+        </div>
+    `;
+}
+
+function montarMensagemTanque(r) {
+    return `Olá! 😊
+Segue o orçamento do seu Tanque Titan Padrão, feito pela *BRASIL PISCIS*:
+
+📏 Diâmetro: ${r.diametro.toFixed(2)} m
+📐 Altura da parede: ${r.altura.toFixed(2)} m
+🧵 Geomembrana total: ${r.geomembranaTotal.toFixed(2)} m²
+📦 Volume (c/ chapéu): ${r.volumeComChapeu.toFixed(2)} m³
+⚖️ Peso do bolsão: ${r.pesoBolsao.toFixed(2)} kg
+🏗️ Peso total do tanque (c/ estrutura): ${r.pesoTotal.toFixed(2)} kg
+
+Qualquer dúvida, estamos à disposição!`;
+}
+
+function togglePainelWhatsappTanque() {
+    const painel = document.getElementById("whatsapp-panel-tanque");
+    painel.style.display = (painel.style.display === "block") ? "none" : "block";
+}
+
+function enviarWhatsappTanque() {
+    const telefoneInput = document.getElementById("telefone-tanque");
+    const mensagem = document.getElementById("mensagem-tanque").value;
+
+    let digitos = telefoneInput.value.replace(/\D/g, "");
+    if (digitos.length === 10 || digitos.length === 11) {
+        digitos = "55" + digitos;
+    }
+    if (digitos.length !== 12 && digitos.length !== 13) {
+        alert("Digite um telefone válido, com DDD (Ex: 11999999999).");
+        return;
+    }
+    const url = `https://web.whatsapp.com/send?phone=${digitos}&text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
+}
+
+// ---------- Descobrir diâmetro exato a partir do volume ----------
+function roundUp2(valor) {
+    return Math.ceil(valor * 100) / 100;
+}
+
+function calcularDiametroExato() {
+    const erroDiv = document.getElementById("erro-diametro");
+    const resultadoDiv = document.getElementById("resultado-diametro");
+    erroDiv.style.display = "none";
+    erroDiv.textContent = "";
+    resultadoDiv.innerHTML = "";
+
+    const alturaReal = lerNumero(document.getElementById("t-altura-real").value);
+    const volumeDesejado = lerNumero(document.getElementById("t-volume-desejado").value);
+
+    if (isNaN(alturaReal) || isNaN(volumeDesejado) || alturaReal <= 0 || volumeDesejado <= 0) {
+        erroDiv.textContent = "Preencha altura real e volume desejado com números válidos maiores que zero.";
+        erroDiv.style.display = "block";
+        return;
+    }
+
+    const diametroExato = roundUp2(2 * Math.sqrt(volumeDesejado / (Math.PI * alturaReal))); // D43
+    const raioExato = diametroExato / 2;          // E43
+    const circunferenciaExata = diametroExato * 3.1416; // F43
+
+    resultadoDiv.innerHTML = `
+        <p><b>O diâmetro exato é:</b> ${diametroExato.toFixed(2)} m</p>
+        <p><b>O raio exato é:</b> ${raioExato.toFixed(2)} m</p>
+        <p><b>Circunferência exata:</b> ${circunferenciaExata.toFixed(2)} m</p>
+        <p style="grid-column: 1 / -1;">
+            <button class="secundario" onclick="document.getElementById('t-diametro').value='${formatarBR(diametroExato)}'; mostrarAba('tanque');">
+                Usar este diâmetro na calculadora acima
+            </button>
+        </p>
+    `;
+}
+
+// ---------- Inicialização ----------
+renderizarTabela();
+atualizarLarguraUtil();
+preencherSelectMateriaisTanque();
+renderizarTabelasReferenciaTanque();
+ativarFormatoBrasileiro();
+</script>
+
+</body>
+</html>
